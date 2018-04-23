@@ -62,14 +62,7 @@ namespace MgsCommonLib.Utilities
 
         #endregion
 
-        public static void SortChildsByName(this Transform transform)
-        {
-            transform
-                .GetChilds()
-                .OrderByDescending(t=>t.name)
-                .ToList()
-                .ForEach(t=>t.SetSiblingIndex(0));
-        }
+        #region GetChilds
 
         public static List<Transform> GetChilds(this Transform transform)
         {
@@ -78,5 +71,34 @@ namespace MgsCommonLib.Utilities
                 .Select(transform.GetChild)
                 .ToList();
         }
+
+
+        #endregion
+
+        #region SortChildsByName
+
+        public static void SortChildsByName(this Transform transform)
+        {
+            transform
+                .GetChilds()
+                .OrderByDescending(t=>t.name)
+                .ToList()
+                .ForEach(t=>t.SetSiblingIndex(0));
+        }
+        
+
+        #endregion
+
+        #region SetActiveChilds
+
+        public static void SetActiveChilds(this Transform transform,bool value)
+        {
+            transform
+                .GetChilds()
+                .ForEach(t => t.gameObject.SetActive(value));
+        }
+
+
+        #endregion
     }
 }
