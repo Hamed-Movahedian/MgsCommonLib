@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="MgsCommonLib\Animation\MsgAnimation.cs" />
     <Compile Include="MgsCommonLib\MgsSingleton.cs" />
+    <Compile Include="MgsCommonLib\UI\DialogueWindow.cs" />
     <Compile Include="MgsCommonLib\UI\MgsToggle.cs" />
     <Compile Include="MgsCommonLib\Utilities\MgsAssetUtility.cs" />
     <Compile Include="MgsCommonLib\Utilities\MgsColorUtility.cs" />
@@ -62,7 +63,10 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy "$(TargetPath)" "$(SolutionDir)..\..\Charsoo\Assets\Scripts\Tools"</PostBuildEvent>
+    <PostBuildEvent>"$(SolutionDir)pdb2mdb.exe" "$(TargetPath)"
+copy "$(TargetPath)" "$(SolutionDir)..\..\Charsoo\Assets\Scripts\Tools"
+copy "$(TargetPath).mdb" "$(SolutionDir)..\..\Charsoo\Assets\Scripts\Tools"
+</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
