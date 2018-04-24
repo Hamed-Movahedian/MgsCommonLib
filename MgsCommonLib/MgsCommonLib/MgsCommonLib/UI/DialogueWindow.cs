@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using MgsCommonLib.Animation;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -9,6 +10,7 @@ using MgsCommonLib.Utilities;
 
 public class DialogueWindow : MonoBehaviour
 {
+    
 
     #region Actions
 
@@ -96,22 +98,45 @@ public class DialogueWindow : MonoBehaviour
     #region ShowWindowAndWaitForClose
 
     private bool _isDone = false;
+    private Animator _animator;
 
     public IEnumerator ShowWindowAndWaitForClose()
     {
-        transform.SetActiveChilds(true);
+        yield return Show();
 
         _isDone = false;
 
         while (!_isDone)
             yield return null;
 
-        transform.SetActiveChilds(false);
+        yield return Hide();
 
-        yield return null;
     }
 
-    public void Complete()
+    public IEnumerator Hide()
+    {
+        if (_animator == null)
+            _animator = GetComponent<Animator>();
+
+        if (_animator)
+            yield return _animator.SetTriggerAndWaitForTwoStateChanges("Hide");
+
+        transform.SetActiveChilds(false);
+    }
+
+    public IEnumerator Show()
+    {
+        transform.SetActiveChilds(true);
+
+        if (_animator == null)
+            _animator = GetComponent<Animator>();
+
+        if(_animator)
+            yield return _animator.SetTriggerAndWaitForTwoStateChanges("Show");
+
+    }
+
+    public void Close()
     {
         _isDone = true;
     }

@@ -51,6 +51,7 @@
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MgsCommonLib\Animation\AnimatorExtentions.cs" />
     <Compile Include="MgsCommonLib\Animation\MsgAnimation.cs" />
     <Compile Include="MgsCommonLib\MgsSingleton.cs" />
     <Compile Include="MgsCommonLib\UI\DialogueWindow.cs" />
