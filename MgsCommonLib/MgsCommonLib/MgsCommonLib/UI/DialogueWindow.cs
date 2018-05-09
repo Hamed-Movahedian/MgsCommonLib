@@ -10,8 +10,6 @@ using MgsCommonLib.Utilities;
 
 public class DialogueWindow : MonoBehaviour
 {
-    
-
     #region Actions
 
     private Dictionary<string, Action> _actionDic =
@@ -34,43 +32,55 @@ public class DialogueWindow : MonoBehaviour
 
     #endregion
 
-    #region InputFields
+    #region GetComponentByName
 
-    public string this[string name]
+    private readonly Dictionary<Type, List<Component>> _componentListDic =
+        new Dictionary<Type, List<Component>>();
+
+    public T GetComponentByName<T>(string componentName) where T : Component
     {
-        get
+        #region Get all component of type T and name componentName
+
+        // Convert componentName to lower case
+        componentName = componentName.ToLower();
+
+        // cache component type
+        var componentType = typeof(T);
+
+        // Add list of components to dic if not exist
+        if (!_componentListDic.ContainsKey(componentType))
+            _componentListDic.Add(
+                componentType,
+                GetComponentsInChildren<T>()
+                    .Select(c=>(Component)c)
+                    .ToList());
+
+        // Get all component of type T and name as componentName lowerCase
+        List<Component> components =
+            _componentListDic[componentType]
+                .Where(c => c.name.ToLower() == componentName)
+                .ToList();
+
+        #endregion
+
+        #region Check only one component exist
+
+        if (components.Count > 1)
         {
-            InputField inputField = GetInputField(name);
-
-            if (inputField)
-                return inputField.text;
-
-            return "";
+            Debug.LogError($"More than one component of type {componentType.Name} with name {componentName} in window {name} exist!!!");
+            return null;
         }
-        set
+
+        if (components.Count < 1)
         {
-            InputField inputField = GetInputField(name);
-
-            if (inputField)
-                inputField.text = value;
-        }
-    }
-
-    private InputField[] _inputFields;
-    private InputField GetInputField(string name)
-    {
-        if(_inputFields==null)
-            _inputFields = GetComponentsInChildren<InputField>(true);
-
-        foreach (var inputField in _inputFields)
-        {
-            if (inputField.name.ToLower().Trim() == name.ToLower().Trim())
-                return inputField;
+            Debug.LogError($"No component of type {componentType.Name} with name {componentName} in window {name} exist!!!");
+            return null;
         }
 
-        Debug.LogError("Input field " + name + " not found!!");
-
-        return null;
+        #endregion
+        
+        // return the only one matching component
+        return (T) components[0];
 
     }
 
