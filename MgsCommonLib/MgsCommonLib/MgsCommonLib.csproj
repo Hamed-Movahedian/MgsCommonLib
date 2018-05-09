@@ -54,7 +54,7 @@
     <Compile Include="MgsCommonLib\Animation\AnimatorExtentions.cs" />
     <Compile Include="MgsCommonLib\Animation\MsgAnimation.cs" />
     <Compile Include="MgsCommonLib\MgsSingleton.cs" />
-    <Compile Include="MgsCommonLib\UI\DialogueWindow.cs" />
+    <Compile Include="MgsCommonLib\UI\UIWindow.cs" />
     <Compile Include="MgsCommonLib\UI\MgsToggle.cs" />
     <Compile Include="MgsCommonLib\Utilities\MgsAssetUtility.cs" />
     <Compile Include="MgsCommonLib\Utilities\MgsColorUtility.cs" />
