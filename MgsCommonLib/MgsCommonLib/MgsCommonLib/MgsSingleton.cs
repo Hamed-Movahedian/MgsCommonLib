@@ -7,10 +7,9 @@ namespace MgsCommonLib
 {
     public class MgsSingleton<T> : MonoBehaviour where T : MgsSingleton<T>
     {
-        #region Propertes
+        #region Instance
 
         private static T _instance;
-        private bool _initialized=false;
 
         public static T Instance
         {
@@ -22,18 +21,17 @@ namespace MgsCommonLib
                     // get all objects
                     var objects = FindObjectsOfType<T>().ToList();
 
-                    // not found !!!
+                    // If not found create a new one
                     if (objects.Count == 0)
                     {
                         _instance = MgsGameobjectUtility.CreateComponent<T>();
 
                         _instance.Initialize();
-                        _instance._initialized = true;
 
-                        Debug.LogError(string.Format("{0} must exist !!!", typeof(T).Name));
+                        Debug.LogWarning($"{typeof(T).Name} not exist and automaticaly created !!!");
                     }
 
-                    // more than one object
+                    // if more than one object destroy them
                     while (objects.Count > 1)
                         objects.RemoveFirstAndReturn().SafeDestroy();
 
@@ -47,13 +45,22 @@ namespace MgsCommonLib
 
         #endregion
 
+        #region Awake and Initialize
+
+        private bool _initialized = false;
+
         protected virtual void Initialize(){}
 
         private void Awake()
         {
-            if(!_initialized)
+            if (!_initialized)
+            {
                 Initialize();
+                _initialized = true;
+
+            }
         }
 
+        #endregion
     }
 }

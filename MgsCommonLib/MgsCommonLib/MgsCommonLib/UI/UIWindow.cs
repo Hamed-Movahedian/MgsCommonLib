@@ -14,13 +14,17 @@ namespace MgsCommonLib.UI
         #region Get Window
         public static UIWindow GetWindow(string name)
         {
+            // name to lower case
+            name = name.ToLower();
+
+            // find window
             var window = FindObjectsOfType<UIWindow>()
-                .FirstOrDefault(w => w.name == name);
+                .FirstOrDefault(w => w.name.ToLower() == name);
 
             if (window != null)
                 return window;
 
-            Debug.LogError("Dialogue window " + name + " not found!!");
+            Debug.LogError($"Window {name} not found!!");
 
             return null;
 
@@ -29,17 +33,16 @@ namespace MgsCommonLib.UI
 
         #region Actions
 
-        private readonly Dictionary<string, Action<UIWindow>> _actionDic =
-            new Dictionary<string, Action<UIWindow>>();
-
+        private readonly Dictionary<string, Func<UIWindow, IEnumerator>> _actionDic =
+            new Dictionary<string, Func<UIWindow, IEnumerator>>();
 
         public void RunAction(string actionName)
         {
             if (_actionDic.ContainsKey(actionName))
-                _actionDic[actionName](this);
+                StartCoroutine(_actionDic[actionName](this));
         }
 
-        public void SetAction(string actionName, Action<UIWindow> action)
+        public void SetAction(string actionName, Func<UIWindow, IEnumerator> action)
         {
             if (_actionDic.ContainsKey(actionName))
                 _actionDic[actionName] = action;
@@ -68,7 +71,7 @@ namespace MgsCommonLib.UI
             if (!_componentListDic.ContainsKey(componentType))
                 _componentListDic.Add(
                     componentType,
-                    GetComponentsInChildren<T>()
+                    GetComponentsInChildren<T>(true)
                         .Select(c=>(Component)c)
                         .ToList());
 
