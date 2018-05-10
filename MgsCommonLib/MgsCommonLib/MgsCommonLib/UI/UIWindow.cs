@@ -52,6 +52,24 @@ namespace MgsCommonLib.UI
 
         #endregion
 
+        #region New Action
+
+        public string LastActionName;
+        public IEnumerator WaitForAction()
+        {
+            LastActionName = "";
+            while (LastActionName == "")
+                yield return null;
+        }
+
+        public void RunActionNew(string actionName)
+        {
+            LastActionName = actionName;
+        }
+
+
+        #endregion
+
         #region GetComponentByName
 
         private readonly Dictionary<Type, List<Component>> _componentListDic =
