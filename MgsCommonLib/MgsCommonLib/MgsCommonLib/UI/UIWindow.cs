@@ -2,9 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using ArabicSupport;
 using MgsCommonLib.Animation;
 using MgsCommonLib.Utilities;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace MgsCommonLib.UI
 {
@@ -31,40 +33,76 @@ namespace MgsCommonLib.UI
         }
         #endregion
 
-        #region Actions
+        #region Dialogue
 
-        private readonly Dictionary<string, Func<UIWindow, IEnumerator>> _actionDic =
-            new Dictionary<string, Func<UIWindow, IEnumerator>>();
+        public static UIWindow Dialogue;
 
-        public void RunAction(string actionName)
+        public static IEnumerator ShowDialogueWait(string windowName, string message, params string[] buttons)
         {
-            if (_actionDic.ContainsKey(actionName))
-                StartCoroutine(_actionDic[actionName](this));
+            SetDialogue(windowName, message, buttons);
+
+            yield return Dialogue.ShowWaitForAction();
+        }
+        public static IEnumerator ShowDialogueWaitHide(string windowName, string message, params string[] buttons)
+        {
+            SetDialogue(windowName, message, buttons);
+
+            yield return Dialogue.ShowWaitForActionHide();
+        }
+        public static IEnumerator ShowDialogue(string windowName, string message, params string[] buttons)
+        {
+            SetDialogue(windowName, message, buttons);
+
+            yield return Dialogue.Show();
         }
 
-        public void SetAction(string actionName, Func<UIWindow, IEnumerator> action)
+        public static void SetDialogue(string windowName, string message,params string[] buttons)
         {
-            if (_actionDic.ContainsKey(actionName))
-                _actionDic[actionName] = action;
-            else
-                _actionDic.Add(actionName, action);
+            // Get window
+            Dialogue = GetWindow(windowName);
+
+            // Setup window
+            Dialogue.GetComponentByName<Text>("Message").text = message;
+
+            for (var i = 0; i < buttons.Length; i++)
+                SetupDialogueButton("Button" + i, buttons[i]);
+        }
+
+        private static void SetupDialogueButton(string name, string lable)
+        {
+            Button button = Dialogue.GetComponentByName<Button>(name);
+
+            button.gameObject.SetActive(lable == null);
+
+            if (lable != null)
+            {
+                Text text = button.GetComponentInChildren<Text>(true);
+                if (text)
+                    text.text = ArabicFixer.Fix(lable);
+            }
         }
 
         #endregion
 
-        #region New Action
+        #region Actions
 
-        public string LastActionName;
+        private string _lastActionName;
+
         public IEnumerator WaitForAction()
         {
-            LastActionName = "";
-            while (LastActionName == "")
+            _lastActionName = "";
+            while (_lastActionName == "")
                 yield return null;
         }
 
-        public void RunActionNew(string actionName)
+        public void RunAction(string actionName)
         {
-            LastActionName = actionName;
+            _lastActionName = actionName;
+        }
+
+        public bool CheckLastAction(string actionName)
+        {
+            return _lastActionName.ToLower() == actionName.ToLower();
         }
 
 
@@ -90,7 +128,7 @@ namespace MgsCommonLib.UI
                 _componentListDic.Add(
                     componentType,
                     GetComponentsInChildren<T>(true)
-                        .Select(c=>(Component)c)
+                        .Select(c => (Component)c)
                         .ToList());
 
             // Get all component of type T and name as componentName lowerCase
@@ -116,14 +154,14 @@ namespace MgsCommonLib.UI
             }
 
             #endregion
-        
+
             // return the only one matching component
-            return (T) components[0];
+            return (T)components[0];
 
         }
 
         #endregion
-    
+
         #region Show and Hide
 
         private Animator _animator;
@@ -156,28 +194,58 @@ namespace MgsCommonLib.UI
         #region Close
 
         private bool _isDone = false;
+
         public void Close()
         {
             _isDone = true;
         }
 
-
-        #endregion
-
-        #region ShowAndWaitForClose
-        public IEnumerator ShowAndWaitForClose()
+        public IEnumerator WaitForClose()
         {
-            yield return Show();
-
             _isDone = false;
 
             while (!_isDone)
                 yield return null;
+        }
 
-            yield return Hide();
+
+        #endregion
+
+        #region Auxilury methods
+
+        public void StartCorotineMethod(string methodName)
+        {
+            StartCoroutine(methodName);
+        }
+
+        public IEnumerator ShowWaitForAction()
+        {
+            yield return Show();
+            yield return WaitForAction();
 
         }
+        public IEnumerator ShowWaitForClose()
+        {
+            yield return Show();
+            yield return WaitForClose();
+        }
+        public IEnumerator ShowWaitForCloseHide()
+        {
+            yield return Show();
+            yield return WaitForClose();
+            yield return Hide();
+        }
+
+
+        public IEnumerator ShowWaitForActionHide()
+        {
+            yield return Show();
+            yield return WaitForAction();
+            yield return Hide();
+        }
+
         #endregion
+
 
     }
 }
