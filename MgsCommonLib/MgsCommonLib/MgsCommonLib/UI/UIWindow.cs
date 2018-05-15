@@ -246,7 +246,18 @@ namespace MgsCommonLib.UI
 
         #endregion
 
+        #region Special Components
 
+        private Text _messageText;
+
+        public void SetTextMessage(string messageText)
+        {
+            if (_messageText == null)
+                _messageText = GetComponentByName<Text>("Message");
+            _messageText.text = messageText;
+        }
+
+        #endregion
     }
 }
 
