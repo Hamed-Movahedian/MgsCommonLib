@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using ArabicSupport;
 using MgsCommonLib.Animation;
 using MgsCommonLib.Utilities;
 using UnityEngine;
@@ -78,7 +77,7 @@ namespace MgsCommonLib.UI
             {
                 Text text = button.GetComponentInChildren<Text>(true);
                 if (text)
-                    text.text = ArabicFixer.Fix(lable);
+                    text.text = lable;
             }
         }
 
@@ -246,15 +245,23 @@ namespace MgsCommonLib.UI
 
         #endregion
 
-        #region Special Components
+        #region Set special Components
 
         private Text _messageText;
+        private Image _iconImage;
 
         public void SetTextMessage(string messageText)
         {
             if (_messageText == null)
                 _messageText = GetComponentByName<Text>("Message");
             _messageText.text = messageText;
+        }
+
+        public void SetIcon(Sprite icon)
+        {
+            if (_iconImage == null)
+                _iconImage = GetComponentByName<Image>("Icon");
+            _iconImage.sprite = icon;
         }
 
         #endregion
