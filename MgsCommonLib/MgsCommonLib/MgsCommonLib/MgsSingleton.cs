@@ -15,7 +15,7 @@ namespace MgsCommonLib
         {
             get
             {
-                // instanse not set
+                // instance not set
                 if (_instance == null)
                 {
                     // get all objects
@@ -24,11 +24,8 @@ namespace MgsCommonLib
                     // If not found create a new one
                     if (objects.Count == 0)
                     {
-                        _instance = MgsGameobjectUtility.CreateComponent<T>();
-
-                        _instance.Initialize();
-
-                        Debug.LogWarning($"{typeof(T).Name} not exist and automaticaly created !!!");
+                        Debug.LogError($"{typeof(T).Name} doesn't exist !!!".ToUpper());
+                        return null;
                     }
 
                     // if more than one object destroy them
