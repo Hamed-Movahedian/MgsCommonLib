@@ -9,17 +9,17 @@ using UnityEngine.UI;
 
 namespace MgsCommonLib.UI
 {
-    public class UIWindow : MonoBehaviour
+    public class MgsUIWindow : MonoBehaviour
     {
 
         #region Get Window
-        public static UIWindow GetWindow(string name)
+        public static MgsUIWindow GetWindow(string name)
         {
             // name to lower case
             name = name.ToLower();
 
             // find window
-            var window = FindObjectsOfType<UIWindow>()
+            var window = FindObjectsOfType<MgsUIWindow>()
                 .FirstOrDefault(w => w.name.ToLower() == name);
 
             if (window != null)
@@ -34,7 +34,7 @@ namespace MgsCommonLib.UI
 
         #region Dialogue
 
-        public static UIWindow Dialogue;
+        public static MgsUIWindow Dialogue;
 
         public static IEnumerator ShowDialogueWait(string windowName, string message, params string[] buttons)
         {
