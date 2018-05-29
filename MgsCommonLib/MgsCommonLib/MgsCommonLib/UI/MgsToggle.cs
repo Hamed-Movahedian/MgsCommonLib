@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace MgsCommonLib.UI
 {
-    [RequireComponent(typeof(Toggle),typeof(Image))]
+    [RequireComponent(typeof(Image))]
     public class MgsToggle : MonoBehaviour
     {
         public Color SelectedColor=Color.red;

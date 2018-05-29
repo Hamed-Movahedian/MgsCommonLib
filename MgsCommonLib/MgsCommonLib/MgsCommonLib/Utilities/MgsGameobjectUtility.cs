@@ -100,5 +100,23 @@ namespace MgsCommonLib.Utilities
 
 
         #endregion
+
+        #region GetComponentInSibling
+
+        public static List<T> GetComponentInSibling<T>(this Component component) where T : Component
+        {
+            List<T> result=new List<T>();
+
+            foreach (Transform sibling in component.transform.parent)
+            {
+                T comp = sibling.GetComponent<T>();
+                if(comp!=null && comp!=component)
+                    result.Add(comp);
+            }
+
+            return result;
+        }
+
+        #endregion
     }
 }
