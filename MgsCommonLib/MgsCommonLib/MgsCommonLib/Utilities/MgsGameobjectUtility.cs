@@ -103,18 +103,26 @@ namespace MgsCommonLib.Utilities
 
         #region GetComponentInSibling
 
-        public static List<T> GetComponentInSibling<T>(this Component component) where T : Component
+        public static List<T> GetComponentInSiblingIncludeSelf<T>(this Component component) where T : Component
         {
             List<T> result=new List<T>();
 
             foreach (Transform sibling in component.transform.parent)
             {
                 T comp = sibling.GetComponent<T>();
-                if(comp!=null && comp!=component)
+                if(comp!=null)
                     result.Add(comp);
             }
 
             return result;
+        }
+
+        public static List<T> GetComponentInSibling<T>(this Component component) where T : Component
+        {
+            return component
+                .GetComponentInSiblingIncludeSelf<T>()
+                .Where(c=>c!=component)
+                .ToList();
         }
 
         #endregion

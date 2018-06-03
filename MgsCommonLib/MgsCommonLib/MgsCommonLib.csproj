@@ -54,8 +54,8 @@
     <Compile Include="MgsCommonLib\Animation\AnimatorExtentions.cs" />
     <Compile Include="MgsCommonLib\Animation\MsgAnimation.cs" />
     <Compile Include="MgsCommonLib\MgsSingleton.cs" />
+    <Compile Include="MgsCommonLib\UI\MgsUIToggle.cs" />
     <Compile Include="MgsCommonLib\UI\MgsUIWindow.cs" />
-    <Compile Include="MgsCommonLib\UI\MgsToggle.cs" />
     <Compile Include="MgsCommonLib\Utilities\MgsAssetUtility.cs" />
     <Compile Include="MgsCommonLib\Utilities\MgsColorUtility.cs" />
     <Compile Include="MgsCommonLib\Utilities\MgsGameobjectUtility.cs" />
@@ -68,8 +68,8 @@
 copy "$(TargetPath)" "$(SolutionDir)..\..\Charsoo\Assets\Scripts\Tools"
 copy "$(TargetPath).mdb" "$(SolutionDir)..\..\Charsoo\Assets\Scripts\Tools"
 
-copy "$(TargetPath)" "$(SolutionDir)..\..\MgsAvatarProject\Assets\Library"
-copy "$(TargetPath).mdb" "$(SolutionDir)..\..\MgsAvatarProject\Assets\Library"
+copy "$(TargetPath)" "$(SolutionDir)..\..\MgsAvatarProject\Assets\DllLibrary"
+copy "$(TargetPath).mdb" "$(SolutionDir)..\..\MgsAvatarProject\Assets\DllLibrary"
 
 </PostBuildEvent>
   </PropertyGroup>

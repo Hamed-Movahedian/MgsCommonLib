@@ -58,7 +58,7 @@ namespace MgsCommonLib.Utilities
         /// <summary>
         /// Create new RectTransforms if needed
         /// </summary>
-        private static void SetUiParent(this GameObject gameObject, Component parent)
+        public static void SetUiParent(this GameObject gameObject, Component parent)
         {
             gameObject.SetUiParent(parent);
         }        
@@ -66,7 +66,7 @@ namespace MgsCommonLib.Utilities
         /// <summary>
         /// Create new RectTransforms if needed
         /// </summary>
-        private static void SetUiParent(this GameObject gameObject, GameObject parent)
+        public static void SetUiParent(this GameObject gameObject, GameObject parent)
         {
             gameObject.GetRectTransform().SetParent(parent.GetRectTransform());
         }
