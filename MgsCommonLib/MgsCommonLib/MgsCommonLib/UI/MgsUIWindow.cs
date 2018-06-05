@@ -173,7 +173,6 @@ namespace MgsCommonLib.UI
             if (_animator)
                 yield return _animator.SetTriggerAndWaitForTwoStateChanges("Hide");
 
-            transform.SetActiveChilds(false);
         }
 
         public IEnumerator Show()
