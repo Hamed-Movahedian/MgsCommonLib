@@ -58,6 +58,7 @@
     <Compile Include="MgsCommonLib\UI\MgsUIWindow.cs" />
     <Compile Include="MgsCommonLib\Utilities\MgsAssetUtility.cs" />
     <Compile Include="MgsCommonLib\Utilities\MgsColorUtility.cs" />
+    <Compile Include="MgsCommonLib\Utilities\MgsEditorCoroutine.cs" />
     <Compile Include="MgsCommonLib\Utilities\MgsGameobjectUtility.cs" />
     <Compile Include="MgsCommonLib\Utilities\MgsListUtility.cs" />
     <Compile Include="MgsCommonLib\Utilities\MgsUiUtility.cs" />
