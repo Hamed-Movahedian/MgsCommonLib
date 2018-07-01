@@ -48,5 +48,27 @@ namespace MgsCommonLib.Utilities
                     StartEnumerator(current);
             }
         }
+
+        public static IEnumerator StartCoroutineRuntime(IEnumerator enumerator, Func<bool> function, double funcCallDeltaTime)
+        {
+            float lastTime = Time.realtimeSinceStartup;
+
+            while (enumerator.MoveNext())
+            {
+                if (Time.realtimeSinceStartup - lastTime > funcCallDeltaTime)
+                {
+                    if (function())
+                        yield return null;
+                    else
+                        yield break;
+
+                    lastTime = Time.realtimeSinceStartup;
+                }
+
+                if(enumerator.Current!=null)
+                    if (enumerator.Current is IEnumerator)
+                        yield return StartCoroutineRuntime((IEnumerator) enumerator.Current, function, funcCallDeltaTime);
+            }
+        }
     }
 }

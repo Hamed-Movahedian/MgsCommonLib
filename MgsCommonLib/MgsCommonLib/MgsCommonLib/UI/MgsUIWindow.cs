@@ -179,12 +179,18 @@ namespace MgsCommonLib.UI
         {
             transform.SetActiveChilds(true);
 
+            OnShow();
             if (_animator == null)
                 _animator = GetComponent<Animator>();
 
             if (_animator)
                 yield return _animator.SetTriggerAndWaitForTwoStateChanges("Show");
 
+        }
+
+        protected virtual void OnShow()
+        {
+            
         }
 
         #endregion
@@ -248,6 +254,7 @@ namespace MgsCommonLib.UI
 
         private Text _messageText;
         private Image _iconImage;
+        private Image _fillImage;
 
         public void SetTextMessage(string messageText)
         {
@@ -261,6 +268,13 @@ namespace MgsCommonLib.UI
             if (_iconImage == null)
                 _iconImage = GetComponentByName<Image>("Icon");
             _iconImage.sprite = icon;
+        }
+        public void SetFillAmount(float amount)
+        {
+            if (_fillImage == null)
+                _fillImage = GetComponentByName<Image>("ProgressFill");
+
+            _fillImage.fillAmount = amount;
         }
 
         #endregion
