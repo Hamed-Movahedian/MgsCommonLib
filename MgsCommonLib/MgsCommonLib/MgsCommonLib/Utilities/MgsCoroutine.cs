@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
-using UnityEditor;
+//using UnityEditor;
 
 namespace MgsCommonLib.Utilities
 {
     public class MgsCoroutine
     {
+        public static Func<double> GetTime;
         private double _lastTime;
         private Func<bool> _userFunc;
         private double _deltaTime;
@@ -26,7 +27,7 @@ namespace MgsCommonLib.Utilities
             {
                 _userFunc = function,
                 _deltaTime = funcCallDeltaTime,
-                _lastTime = EditorApplication.timeSinceStartup
+                _lastTime = GetTime()
             };
             coroutine.StartEnumerator(enumerator);
         }
@@ -35,9 +36,9 @@ namespace MgsCommonLib.Utilities
 
             while (enumerator.MoveNext())
             {
-                if (EditorApplication.timeSinceStartup - _lastTime > _deltaTime || _forceUpdate)
+                if (GetTime() - _lastTime > _deltaTime || _forceUpdate)
                 {
-                    _lastTime = EditorApplication.timeSinceStartup;
+                    _lastTime = GetTime();
                     _forceUpdate = false;
                     if (_userFunc())
                         break;
