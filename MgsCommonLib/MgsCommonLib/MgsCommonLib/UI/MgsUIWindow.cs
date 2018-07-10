@@ -11,6 +11,11 @@ namespace MgsCommonLib.UI
 {
     public class MgsUIWindow : MonoBehaviour
     {
+        #region Public
+
+        public string Result;
+
+        #endregion
 
         #region Get Window
         public static MgsUIWindow GetWindow(string name)
@@ -202,6 +207,11 @@ namespace MgsCommonLib.UI
         public void Close()
         {
             _isDone = true;
+        }
+        public void Close(string result)
+        {
+            _isDone = true;
+            Result = result;
         }
 
         public IEnumerator WaitForClose()

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using MgsCommonLib.Utilities;
 using UnityEngine;
 using UnityEngine.Events;
@@ -62,6 +63,11 @@ namespace MgsCommonLib.UI
         {
             IsOn = false;
             OnDeactivate.Invoke();
+        }
+
+        public MgsUIToggle GetActiveToggle()
+        {
+            return _siblingToggles.FirstOrDefault(t => t.IsOn);
         }
 
     }
