@@ -24,6 +24,8 @@ namespace MgsCommonLib.Animation
                     $"Animator in {animator.name} don't have triger \"{triggerName}\" !!!");
                 yield break;
             }
+
+            yield return new WaitForEndOfFrame();
             animator.SetTrigger(triggerName);
             yield return animator.WaitForChangeState();
             yield return animator.WaitForChangeState();

@@ -12,7 +12,7 @@ namespace MgsCommonLib.UI
     public class MgsUIWindow : MonoBehaviour
     {
         #region Public
-
+        [HideInInspector]
         public string Result;
 
         #endregion
@@ -187,6 +187,7 @@ namespace MgsCommonLib.UI
             OnShow();
             if (_animator == null)
                 _animator = GetComponent<Animator>();
+
 
             if (_animator)
                 yield return _animator.SetTriggerAndWaitForTwoStateChanges("Show");
