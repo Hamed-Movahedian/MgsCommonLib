@@ -147,14 +147,13 @@ namespace MgsCommonLib.UI
 
             if (components.Count > 1)
             {
-                Debug.LogError($"More than one component of type {componentType.Name} with name {componentName} in window {name} exist!!!");
+                throw new Exception($"More than one component of type {componentType.Name} with name {componentName} in window {name} exist!!!");
                 return null;
             }
 
             if (components.Count < 1)
             {
-                Debug.LogError($"No component of type {componentType.Name} with name {componentName} in window {name} exist!!!");
-                return null;
+                throw new Exception($"No component of type {componentType.Name} with name {componentName} in window {name} exist!!!");
             }
 
             #endregion

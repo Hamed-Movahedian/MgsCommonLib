@@ -24,8 +24,7 @@ namespace MgsCommonLib
                     // If not found create a new one
                     if (objects.Count == 0)
                     {
-                        Debug.LogError($"{typeof(T).Name} doesn't exist !!!".ToUpper());
-                        return null;
+                        throw new Exception($"Singleton {typeof(T).Name} doesn't exist !!!");
                     }
 
                     // if more than one object destroy them
