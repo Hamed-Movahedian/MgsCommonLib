@@ -72,6 +72,9 @@ copy "$(TargetPath).mdb" "$(SolutionDir)..\..\Charsoo\Assets\Scripts\Tools"
 copy "$(TargetPath)" "$(SolutionDir)..\..\MgsAvatarProject\Assets\DllLibrary"
 copy "$(TargetPath).mdb" "$(SolutionDir)..\..\MgsAvatarProject\Assets\DllLibrary"
 
+copy "$(TargetPath)" "$(SolutionDir)..\..\FollowMachine\Assets"
+copy "$(TargetPath).mdb" "$(SolutionDir)..\..\FollowMachine\Assets"
+
 </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

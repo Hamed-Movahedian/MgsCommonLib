@@ -60,7 +60,7 @@ namespace MgsCommonLib.UI
             yield return Dialogue.Show();
         }
 
-        public static void SetDialogue(string windowName, string message,params string[] buttons)
+        public static void SetDialogue(string windowName, string message, params string[] buttons)
         {
             // Get window
             Dialogue = GetWindow(windowName);
@@ -148,7 +148,6 @@ namespace MgsCommonLib.UI
             if (components.Count > 1)
             {
                 throw new Exception($"More than one component of type {componentType.Name} with name {componentName} in window {name} exist!!!");
-                return null;
             }
 
             if (components.Count < 1)
@@ -195,7 +194,7 @@ namespace MgsCommonLib.UI
 
         protected virtual void OnShow()
         {
-            
+
         }
 
         #endregion
@@ -249,7 +248,16 @@ namespace MgsCommonLib.UI
             yield return WaitForClose();
             yield return Hide();
         }
+        public IEnumerator WaitForClose(bool show, bool hide)
+        {
+            if (show)
+                yield return Show();
 
+            yield return WaitForClose();
+
+            if (hide)
+                yield return Hide();
+        }
 
         public IEnumerator ShowWaitForActionHide()
         {
