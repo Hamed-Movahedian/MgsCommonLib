@@ -15,6 +15,11 @@ namespace MgsCommonLib.UI
         [HideInInspector]
         public string Result;
 
+        public List<string> ActionList = new List<string>();
+
+        public delegate void Change();
+
+        public Change OnChange;
         #endregion
 
         #region Get Window
@@ -210,7 +215,13 @@ namespace MgsCommonLib.UI
         public void Close(string result)
         {
             _isDone = true;
+
             Result = result;
+
+            foreach (var action in ActionList)
+                if (action == result)
+                    return;
+            throw new Exception($"Action {result} isn't set in window {name} ");
         }
 
         public IEnumerator WaitForClose()
@@ -296,6 +307,11 @@ namespace MgsCommonLib.UI
         }
 
         #endregion
+
+        void OnValidate()
+        {
+            OnChange?.Invoke();
+        }
     }
 }
 
