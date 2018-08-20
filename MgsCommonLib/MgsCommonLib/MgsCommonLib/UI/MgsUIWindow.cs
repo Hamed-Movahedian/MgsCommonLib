@@ -1,45 +1,21 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using MgsCommonLib.Animation;
-using MgsCommonLib.Utilities;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace MgsCommonLib.UI
 {
-    public class MgsUIWindow : MonoBehaviour
+    public class MgsUIWindow : MgsUIWindowBase
     {
         #region Public
-        [HideInInspector]
-        public string Result;
 
         public List<string> ActionList = new List<string>();
 
-        public delegate void Change();
-
-        public Change OnChange;
         #endregion
 
         #region Get Window
-        public static MgsUIWindow GetWindow(string name)
-        {
-            // name to lower case
-            name = name.ToLower();
 
-            // find window
-            var window = FindObjectsOfType<MgsUIWindow>()
-                .FirstOrDefault(w => w.name.ToLower() == name);
-
-            if (window != null)
-                return window;
-
-            Debug.LogError($"Window {name} not found!!");
-
-            return null;
-
-        }
         #endregion
 
         #region Dialogue
@@ -119,104 +95,17 @@ namespace MgsCommonLib.UI
 
         #region GetComponentByName
 
-        private readonly Dictionary<Type, List<Component>> _componentListDic =
-            new Dictionary<Type, List<Component>>();
-
-        public T GetComponentByName<T>(string componentName) where T : Component
-        {
-            #region Get all component of type T and name componentName
-
-            // Convert componentName to lower case
-            componentName = componentName.ToLower();
-
-            // cache component type
-            var componentType = typeof(T);
-
-            // Add list of components to dic if not exist
-            if (!_componentListDic.ContainsKey(componentType))
-                _componentListDic.Add(
-                    componentType,
-                    GetComponentsInChildren<T>(true)
-                        .Select(c => (Component)c)
-                        .ToList());
-
-            // Get all component of type T and name as componentName lowerCase
-            List<Component> components =
-                _componentListDic[componentType]
-                    .Where(c => c.name.ToLower() == componentName)
-                    .ToList();
-
-            #endregion
-
-            #region Check only one component exist
-
-            if (components.Count > 1)
-            {
-                throw new Exception($"More than one component of type {componentType.Name} with name {componentName} in window {name} exist!!!");
-            }
-
-            if (components.Count < 1)
-            {
-                throw new Exception($"No component of type {componentType.Name} with name {componentName} in window {name} exist!!!");
-            }
-
-            #endregion
-
-            // return the only one matching component
-            return (T)components[0];
-
-        }
-
         #endregion
 
         #region Show and Hide
-
-        private Animator _animator;
-
-        public IEnumerator Hide()
-        {
-            if (_animator == null)
-                _animator = GetComponent<Animator>();
-
-            if (_animator)
-                yield return _animator.SetTriggerAndWaitForTwoStateChanges("Hide");
-
-        }
-
-        public IEnumerator Show()
-        {
-            transform.SetActiveChilds(true);
-
-            OnShow();
-            if (_animator == null)
-                _animator = GetComponent<Animator>();
-
-
-            if (_animator)
-                yield return _animator.SetTriggerAndWaitForTwoStateChanges("Show");
-
-        }
-
-        protected virtual void OnShow()
-        {
-
-        }
 
         #endregion
 
         #region Close
 
-        private bool _isDone = false;
-
-        public void Close()
+        public override void Close(string result)
         {
-            _isDone = true;
-        }
-        public void Close(string result)
-        {
-            _isDone = true;
-
-            Result = result;
+            base.Close(result);
 
             foreach (var action in ActionList)
                 if (action == result)
@@ -224,23 +113,9 @@ namespace MgsCommonLib.UI
             throw new Exception($"Action {result} isn't set in window {name} ");
         }
 
-        public IEnumerator WaitForClose()
-        {
-            _isDone = false;
-
-            while (!_isDone)
-                yield return null;
-        }
-
-
         #endregion
 
         #region Auxilury methods
-
-        public void StartCorotineMethod(string methodName)
-        {
-            StartCoroutine(methodName);
-        }
 
         public IEnumerator ShowWaitForAction()
         {
@@ -258,16 +133,6 @@ namespace MgsCommonLib.UI
             yield return Show();
             yield return WaitForClose();
             yield return Hide();
-        }
-        public IEnumerator WaitForClose(bool show, bool hide)
-        {
-            if (show)
-                yield return Show();
-
-            yield return WaitForClose();
-
-            if (hide)
-                yield return Hide();
         }
 
         public IEnumerator ShowWaitForActionHide()
@@ -307,11 +172,6 @@ namespace MgsCommonLib.UI
         }
 
         #endregion
-
-        void OnValidate()
-        {
-            OnChange?.Invoke();
-        }
     }
 }
 

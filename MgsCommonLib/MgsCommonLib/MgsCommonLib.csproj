@@ -54,8 +54,14 @@
     <Compile Include="MgsCommonLib\Animation\AnimatorExtentions.cs" />
     <Compile Include="MgsCommonLib\Animation\MsgAnimation.cs" />
     <Compile Include="MgsCommonLib\MgsSingleton.cs" />
+    <Compile Include="MgsCommonLib\Theme\ColorPack.cs" />
+    <Compile Include="MgsCommonLib\Theme\IconPack.cs" />
+    <Compile Include="MgsCommonLib\Theme\LanguagePack.cs" />
+    <Compile Include="MgsCommonLib\Theme\ThemeManager.cs" />
+    <Compile Include="MgsCommonLib\UI\MgsDialougWindow.cs" />
     <Compile Include="MgsCommonLib\UI\MgsUIToggle.cs" />
     <Compile Include="MgsCommonLib\UI\MgsUIWindow.cs" />
+    <Compile Include="MgsCommonLib\UI\MgsUIWindowBase.cs" />
     <Compile Include="MgsCommonLib\Utilities\MgsAssetUtility.cs" />
     <Compile Include="MgsCommonLib\Utilities\MgsColorUtility.cs" />
     <Compile Include="MgsCommonLib\Utilities\MgsCoroutine.cs" />
