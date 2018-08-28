@@ -59,6 +59,7 @@
     <Compile Include="MgsCommonLib\Theme\LanguagePack.cs" />
     <Compile Include="MgsCommonLib\Theme\ThemeManager.cs" />
     <Compile Include="MgsCommonLib\UI\MgsDialougWindow.cs" />
+    <Compile Include="MgsCommonLib\UI\MgsProgressWindow.cs" />
     <Compile Include="MgsCommonLib\UI\MgsUIToggle.cs" />
     <Compile Include="MgsCommonLib\UI\MgsUIWindow.cs" />
     <Compile Include="MgsCommonLib\UI\MgsUIWindowBase.cs" />
@@ -78,8 +79,8 @@ copy "$(TargetPath).mdb" "$(SolutionDir)..\..\Charsoo\Assets\Scripts\Tools"
 copy "$(TargetPath)" "$(SolutionDir)..\..\MgsAvatarProject\Assets\DllLibrary"
 copy "$(TargetPath).mdb" "$(SolutionDir)..\..\MgsAvatarProject\Assets\DllLibrary"
 
-copy "$(TargetPath)" "$(SolutionDir)..\..\FollowMachine\Assets"
-copy "$(TargetPath).mdb" "$(SolutionDir)..\..\FollowMachine\Assets"
+copy "$(TargetPath)" "$(SolutionDir)..\..\FollowMachine"
+copy "$(TargetPath).mdb" "$(SolutionDir)..\..\FollowMachine"
 
 </PostBuildEvent>
   </PropertyGroup>

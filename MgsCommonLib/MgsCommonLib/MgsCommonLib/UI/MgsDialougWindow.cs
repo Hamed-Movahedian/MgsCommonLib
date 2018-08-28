@@ -12,11 +12,11 @@ namespace MgsCommonLib.UI
         public Image Icon;
         public List<Button> Buttons;
 
-        public IEnumerator Display(string title, string message, Sprite icon, List<string> buttonLables)
+        public IEnumerator Display(string title, string message, string icon, List<string> buttonLables)
         {
-            Title.text = title;
-            Message.text = message;
-            Icon.sprite = icon;
+            Title.text = ThemeManager.Instance.LanguagePack.GetLable(title);
+            Message.text = ThemeManager.Instance.LanguagePack.GetLable(message);
+            Icon.sprite = ThemeManager.Instance.IconPack.GetIcon(icon);
             for (int i = 0; i < Buttons.Count; i++)
             {
                 if (i < buttonLables.Count)
@@ -29,9 +29,11 @@ namespace MgsCommonLib.UI
                     var i1 = i;
                     Buttons[i].onClick.AddListener(()=>{Close(buttonLables[i1]);});
                 }
+
+                Buttons[i].gameObject.SetActive(i<buttonLables.Count);
             }
 
-            yield return WaitForClose(true, true);
+            return WaitForClose(true, true);
 
         }
     }
