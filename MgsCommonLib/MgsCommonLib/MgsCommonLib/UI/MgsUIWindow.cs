@@ -13,62 +13,7 @@ namespace MgsCommonLib.UI
         public List<string> ActionList = new List<string>();
 
         #endregion
-
-        #region Get Window
-
-        #endregion
-
-        #region Dialogue
-
-        public static MgsUIWindow Dialogue;
-
-        public static IEnumerator ShowDialogueWait(string windowName, string message, params string[] buttons)
-        {
-            SetDialogue(windowName, message, buttons);
-
-            yield return Dialogue.ShowWaitForAction();
-        }
-        public static IEnumerator ShowDialogueWaitHide(string windowName, string message, params string[] buttons)
-        {
-            SetDialogue(windowName, message, buttons);
-
-            yield return Dialogue.ShowWaitForActionHide();
-        }
-        public static IEnumerator ShowDialogue(string windowName, string message, params string[] buttons)
-        {
-            SetDialogue(windowName, message, buttons);
-
-            yield return Dialogue.Show();
-        }
-
-        public static void SetDialogue(string windowName, string message, params string[] buttons)
-        {
-            // Get window
-            Dialogue = GetWindow(windowName);
-
-            // Setup window
-            Dialogue.GetComponentByName<Text>("Message").text = message;
-
-            for (var i = 0; i < buttons.Length; i++)
-                SetupDialogueButton("Button" + i, buttons[i]);
-        }
-
-        private static void SetupDialogueButton(string name, string lable)
-        {
-            Button button = Dialogue.GetComponentByName<Button>(name);
-
-            button.gameObject.SetActive(lable == null);
-
-            if (lable != null)
-            {
-                Text text = button.GetComponentInChildren<Text>(true);
-                if (text)
-                    text.text = lable;
-            }
-        }
-
-        #endregion
-
+ 
         #region Actions
 
         private string _lastActionName;
@@ -107,10 +52,17 @@ namespace MgsCommonLib.UI
         {
             base.Close(result);
 
+            OnClose();
+
             foreach (var action in ActionList)
                 if (action == result)
                     return;
             throw new Exception($"Action {result} isn't set in window {name} ");
+        }
+
+        public virtual void OnClose()
+        {
+            
         }
 
         #endregion
@@ -169,6 +121,15 @@ namespace MgsCommonLib.UI
                 _fillImage = GetComponentByName<Image>("ProgressFill");
 
             _fillImage.fillAmount = amount;
+        }
+
+        #endregion
+
+        #region Refresh 
+
+        public virtual void Refresh()
+        {
+
         }
 
         #endregion
