@@ -68,6 +68,7 @@
     <Compile Include="MgsCommonLib\Utilities\MgsCoroutine.cs" />
     <Compile Include="MgsCommonLib\Utilities\MgsGameobjectUtility.cs" />
     <Compile Include="MgsCommonLib\Utilities\MgsListUtility.cs" />
+    <Compile Include="MgsCommonLib\Utilities\MgsStringUtility.cs" />
     <Compile Include="MgsCommonLib\Utilities\MgsUiUtility.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

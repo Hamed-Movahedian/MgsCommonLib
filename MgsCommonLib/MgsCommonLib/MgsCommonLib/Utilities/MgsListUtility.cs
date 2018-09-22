@@ -19,5 +19,18 @@ namespace MgsCommonLib.Utilities
         }
 
         #endregion
+
+        #region Resize
+
+        public static void Resize<T>(this List<T> list, int size)
+        {
+            while (list.Count < size)
+                list.Add(default(T));
+
+            while (list.Count > size)
+                list.RemoveAt(list.Count - 1);
+        }
+        #endregion
+
     }
 }
