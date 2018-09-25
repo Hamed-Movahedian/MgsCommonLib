@@ -9,11 +9,14 @@ namespace MgsCommonLib.UI
     {
         public Text  Message;
 
-        public IEnumerator Display(string message)
+        public IEnumerator Display(string message, bool show=true)
         {
             Message.text = ThemeManager.Instance.LanguagePack.GetLable(message);
 
-            return Show();
+            if (show)
+                return Show();
+            else
+                return null;
         }
     }
 }
