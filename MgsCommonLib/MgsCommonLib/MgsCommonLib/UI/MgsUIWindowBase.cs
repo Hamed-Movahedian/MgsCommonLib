@@ -23,6 +23,7 @@ namespace MgsCommonLib.UI
 
         public delegate void Change();
 
+
         public static MgsUIWindow GetWindow(string name)
         {
             // name to lower case
@@ -94,9 +95,11 @@ namespace MgsCommonLib.UI
             if (_animator)
                 yield return _animator.SetTriggerAndWaitForTwoStateChanges("Hide");
 
+            transform.SetActiveChilds(false);
+
         }
 
-        public IEnumerator Show()
+        public virtual IEnumerator Show()
         {
             transform.SetActiveChilds(true);
 

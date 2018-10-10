@@ -11,12 +11,14 @@ namespace MgsCommonLib.UI
         public Text Title, Message;
         public Image Icon;
         public List<Button> Buttons;
+        private List<string> _buttonLables;
 
         public IEnumerator Display(string title, string message, string icon, List<string> buttonLables)
         {
             Title.text = ThemeManager.Instance.LanguagePack.GetLable(title);
             Message.text = ThemeManager.Instance.LanguagePack.GetLable(message);
             Icon.sprite = ThemeManager.Instance.IconPack.GetIcon(icon);
+            _buttonLables = buttonLables;
             for (int i = 0; i < Buttons.Count; i++)
             {
                 if (i < buttonLables.Count)
@@ -27,14 +29,33 @@ namespace MgsCommonLib.UI
 
                     Buttons[i].onClick.RemoveAllListeners();
                     var i1 = i;
-                    Buttons[i].onClick.AddListener(()=>{Close(buttonLables[i1]);});
+                    Buttons[i].onClick.AddListener(() => { Close(buttonLables[i1]); });
                 }
 
-                Buttons[i].gameObject.SetActive(i<buttonLables.Count);
+                Buttons[i].gameObject.SetActive(i < buttonLables.Count);
             }
 
             return WaitForClose(true, true);
 
         }
+
+        #region Back (ESCAPE)
+
+        public void Update()
+        {
+            if (_buttonLables != null)
+                if (Input.GetKeyDown(KeyCode.Escape))
+                {
+                    if (_buttonLables.Contains("Back"))
+                        Close("Back");
+
+                    if (_buttonLables.Contains("back"))
+                        Close("back");
+                }
+        }
+
+        #endregion
+
+
     }
 }

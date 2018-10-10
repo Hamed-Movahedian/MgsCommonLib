@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MgsCommonLib.Utilities
 {
@@ -29,6 +30,19 @@ namespace MgsCommonLib.Utilities
 
             while (list.Count > size)
                 list.RemoveAt(list.Count - 1);
+        }
+        #endregion
+
+        #region EqaulTo
+
+        public static bool IsEqualTo<T>(this List<T> l1, List<T> l2)
+        {
+            if (l1.Count != l2.Count)
+                return false;
+
+            return l2 
+                .Select((item, index) => new { item, index })
+                .All(li => l1[li.index].Equals(li.item));
         }
         #endregion
 
