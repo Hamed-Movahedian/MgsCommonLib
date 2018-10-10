@@ -8,11 +8,14 @@ namespace MgsCommonLib.UI
 {
     public class MgsDialougWindow : MgsUIWindowBase
     {
-        public Text Title, Message;
+        public Text Title;
+        public Text Message;
+        public Text Timer;
         public Image Icon;
+
         public List<Button> Buttons;
 
-        public IEnumerator Display(string title, string message, string icon, List<string> buttonLables)
+        public IEnumerator Display(string title, string message, string icon, List<string> buttonLables,float timer=0)
         {
             Title.text = ThemeManager.Instance.LanguagePack.GetLable(title);
             Message.text = ThemeManager.Instance.LanguagePack.GetLable(message);
@@ -33,8 +36,29 @@ namespace MgsCommonLib.UI
                 Buttons[i].gameObject.SetActive(i<buttonLables.Count);
             }
 
-            return WaitForClose(true, true);
+            yield return Show();
 
+            if (timer>0)
+            {
+                StartCoroutine(ShowTimer(timer));
+            }
+
+            yield return WaitForClose(false,true);
+
+        }
+
+        private IEnumerator ShowTimer(float timer)
+        {
+            float timerPassed = 0;
+
+            while (timerPassed<=timer)
+            {
+                Timer.text = Mathf.RoundToInt(timer - timerPassed).ToString();
+                yield return null;
+                timerPassed += Time.deltaTime;
+            }
+
+            Close("Time Out");
         }
     }
 }
