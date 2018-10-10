@@ -40,6 +40,7 @@ namespace MgsCommonLib.UI
 
             yield return Show();
 
+            Timer.text = "";
             if (timer>0)
             {
                 StartCoroutine(ShowTimer(timer));
