@@ -11,7 +11,6 @@ namespace MgsCommonLib.UI
         #region Public
 
         public List<string> ActionList = new List<string>();
-
         #endregion
  
         #region Actions
@@ -67,6 +66,22 @@ namespace MgsCommonLib.UI
 
         #endregion
 
+        #region Back (ESCAPE)
+
+        public void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                if (ActionList.Contains("Back"))
+                    Close("Back");
+
+                if (ActionList.Contains("back"))
+                    Close("back");
+            }
+        }
+
+        #endregion
+        
         #region Auxilury methods
 
         public IEnumerator ShowWaitForAction()
@@ -133,6 +148,17 @@ namespace MgsCommonLib.UI
         }
 
         #endregion
+
+        #region Fill Actions form buttons
+        [ContextMenu("Fill Actions")]
+        public void FillActions()
+        {
+            Button[] buttons = GetComponentsInChildren<Button>();
+
+            string s = buttons[0].onClick.ToString();
+        }
+        #endregion
+
     }
 }
 
