@@ -25,6 +25,9 @@ namespace MgsCommonLib.Utilities
 
         public static void Resize<T>(this List<T> list, int size)
         {
+            if(list==null)
+                list=new List<T>();
+
             while (list.Count < size)
                 list.Add(default(T));
 
